@@ -1,0 +1,68 @@
+---
+title: "Random Forest"
+output: html_notebook
+---
+
+Abordagem com o pacote e1071 com o dataset Credit
+
+```{r}
+#carregando todas bibliotecas
+library(randomForest)
+```
+
+
+```{r}
+Credit<- read.csv(file="C:/Users/Cliente/Afonso Lenzi/DS/Formação Data Scientist Udemy/Machine Learning/Credit.csv", header=TRUE, sep=",")
+head(Credit)
+```
+
+
+```{r}
+dim(Credit)
+```
+
+```{r}
+amostra = sample(2,1000,replace = T,prob= c(0.70,0.30))
+```
+
+
+```{r}
+creditotreino = Credit[amostra==1,]
+creditoteste = Credit[amostra==2,]
+dim(creditotreino)
+dim(creditoteste)
+```
+
+
+
+modelo 
+```{r}
+forest = randomForest(class ~.,data=creditotreino,nTree=100,importance=T)
+varImpPlot(forest)
+```
+
+
+
+
+
+```{r}
+predicao = predict(forest,creditoteste)
+predicao
+```
+
+```{r}
+confusao = table(creditoteste$class,predicao)
+confusao
+```
+
+```{r}
+taxa_acerto = (confusao[1]+confusao[4])/ sum(confusao)
+taxa_acerto
+```
+
+
+```{r}
+ taxa_erro = 1- taxa_acerto
+taxa_erro
+```
+
