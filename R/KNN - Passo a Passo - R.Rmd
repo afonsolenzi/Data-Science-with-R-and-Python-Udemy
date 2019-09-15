@@ -1,0 +1,52 @@
+---
+title: "KNN - Passo a Passo - R"
+output: html_notebook
+---
+
+Abordagem com o pacote eclass com o dataset iris, baseado no método KNN
+Vizinhos mais próximos
+
+```{r}
+#carregando todas bibliotecas
+
+library(class)
+```
+
+
+```{r}
+head(iris)
+
+```
+```{r}
+summary(iris)
+```
+
+
+```{r}
+dim(iris)
+```
+
+```{r}
+amostra = sample(2,150,replace = T,prob= c(0.75,0.25))
+amostra
+```
+
+
+```{r}
+iristreino = iris[amostra==1,]
+classificar = iris[amostra==2,]
+dim(iristreino)
+dim(iristeste)
+```
+
+
+```{r}
+predicao = knn(iristreino[,1:4],classificar[,1:4],iristreino[,5],k=3)
+predicao
+```
+
+```{r}
+confusao = table(classificar[,5],predicao)
+confusao
+```
+

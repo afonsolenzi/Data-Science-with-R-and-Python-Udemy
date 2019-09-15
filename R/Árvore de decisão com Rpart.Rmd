@@ -1,0 +1,76 @@
+---
+title: "Árvore de decisão com Rpart"
+output: html_notebook
+---
+
+Abordagem com o pacote rpart com o dataset Credi
+
+```{r}
+#carregando todas bibliotecas
+library(rpart)
+```
+
+
+```{r}
+Credit<- read.csv(file="C:/Users/Cliente/Afonso Lenzi/DS/Formação Data Scientist Udemy/Machine Learning/Credit.csv", header=TRUE, sep=",")
+head(Credit)
+```
+
+```{r}
+dim(Credit)
+```
+
+```{r}
+amostra = sample(2,1000,replace = T,prob= c(0.70,0.30))
+```
+
+```{r}
+creditotreino = Credit[amostra==1,]
+creditoteste = Credit[amostra==2,]
+dim(creditotreino)
+dim(creditoteste)
+```
+
+```{r}
+arvore = rpart(class ~ ., data=creditotreino,method = "class")
+arvore
+```
+
+```{r}
+plot(arvore)
+text(arvore, use.n = T,all=T,cex=.8)
+```
+```{r}
+teste = predict(arvore,newdata=creditoteste)
+teste
+```
+
+```{r}
+cred=cbind(creditoteste,teste)
+fix(cred)
+```
+
+```{r}
+cred['Result_Teste']= ifelse( cred$bad>0.5,"bad","good")
+fix(cred)
+```
+
+
+```{r}
+confusao=table(cred$class,cred$Result_Teste)
+confusao
+```
+
+
+
+```{r}
+taxa_acerto = (confusao[1]+confusao[4])/ sum(confusao)
+taxa_acerto
+```
+
+```{r}
+taxa_erro = 1- taxa_acerto
+taxa_erro
+```
+
+

@@ -1,0 +1,74 @@
+---
+title: "Naive Bayes - Passo a Passo - R"
+output: html_notebook
+---
+
+Abordagem com o pacote e1071 com o dataset Credit
+
+```{r}
+#carregando todas bibliotecas
+library(e1071)
+```
+
+
+```{r}
+Credit<- read.csv(file="C:/Users/Cliente/Afonso Lenzi/DS/Formação Data Scientist Udemy/Machine Learning/Credit.csv", header=TRUE, sep=",")
+head(Credit)
+```
+
+
+```{r}
+dim(Credit)
+```
+
+```{r}
+amostra = sample(2,1000,replace = T,prob= c(0.75,0.25))
+```
+
+
+```{r}
+creditotreino = Credit[amostra==1,]
+creditoteste = Credit[amostra==2,]
+dim(creditotreino)
+dim(creditoteste)
+```
+
+```{r}
+modelo = naiveBayes(class ~.,creditotreino)
+modelo
+```
+
+
+```{r}
+predicao = predict(modelo,creditoteste)
+predicao
+```
+
+```{r}
+confusao = table(creditoteste$class,predicao)
+confusao
+```
+
+```{r}
+taxa_acerto = (confusao[1]+confusao[4])/ sum(confusao)
+
+```
+
+
+```{r}
+ taxa_erro = 1- taxa_acerto
+taxa_erro
+```
+
+usar o modelo para prever se o cliente é bom ou mal pagador, #produção
+
+```{r}
+novo_credit<- read.csv(file="C:/Users/Cliente/Afonso Lenzi/DS/Formação Data Scientist Udemy/Machine Learning/NovoCredit.csv", header=TRUE, sep=",")
+head(novo_credit)
+```
+
+
+```{r}
+predict(modelo,novo_credit)
+```
+
