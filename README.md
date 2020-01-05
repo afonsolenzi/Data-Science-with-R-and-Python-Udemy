@@ -1,2 +1,2 @@
-# Repository with a few tests about machine learning in R and Python, feel free to use it for your tests!
-based on this course: https://www.udemy.com/course/cientista-de-dados/
+# Repository with a few exercises about machine learning in R and Python, feel free to use it for your tests!
+exercises part of this course: https://www.udemy.com/course/cientista-de-dados/
